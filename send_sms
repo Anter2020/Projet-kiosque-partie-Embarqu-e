@@ -1,0 +1,23 @@
+import time
+import serial
+
+recipient = "+21624763741"
+message = "hello"
+
+phone = serial.Serial("/dev/ttyAMA0",baudrate=9600, timeout=1)
+try:
+    print ('+21624334468')
+    time.sleep(0.5)
+    phone.write('AT'+'\r\n')
+    time.sleep(0.5)
+    phone.write('AT+CMGF=1'+'\r\n')
+    print ('type de envoi msg = txt')
+    time.sleep(0.5)
+    phone.write(b'AT+CMGS="' + recipient.encode() + b'"\r')
+    print ('contenu du message ')
+    phone.write(message.encode() + b"\r")
+    phone.write("\x1A")
+    print ('contenu du message ')
+finally:
+    print ('fermeture du port ')
+    phone.close()
